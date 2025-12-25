@@ -258,7 +258,7 @@ function formCommandSubmit(command)
           <tr> 
                   <th>&nbsp;</th>
                   <th><a href="amuleweb-main-dload.php?sort=name">File name</a></th>
-                  <th>File Type</th>
+                  <th><a href="amuleweb-main-dload.php?sort=filetype">File Type</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=size">Size</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=size_done">Completed</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=speed">Download speed</a></th>
@@ -318,6 +318,7 @@ function formCommandSubmit(command)
 				case "size_done": $result = $a->size_done > $b->size_done; break;
 				case "progress": $result = (((float)$a->size_done)/((float)$a->size)) > (((float)$b->size_done)/((float)$b->size)); break;
 				case "name": $result = $a->name > $b->name; break;
+				case "filetype": $result = $a->filetype > $b->filetype; break;
 				case "speed": $result = $a->speed > $b->speed; break;
 				case "scrcount": $result = $a->src_count > $b->src_count; break;
 				case "status": $result = StatusString($a) > StatusString($b); break;
@@ -395,14 +396,8 @@ function formCommandSubmit(command)
 	
 				echo "<td class='texte' height='22'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 	
-				echo "<td class='texte' height='22' title='", $file->name, "'>", $file->name, "</td>";
-				$pos = strrpos($file->name, '.');
-				if ($pos == false) {
-					$ext = "";
-				} else {
-					$ext = strtoupper(substr($file->name, $pos + 1));
-				}
-				echo "<td class='texte' height='22' align='center'>", $ext, "</td>";
+				echo "<td class='texte' height='22'>", $file->short_name, "</td>";
+				echo "<td class='texte' height='22' align='center'>", $file->filetype, "</td>";
 				
 				echo "<td class='texte' height='22' align='center'>", CastToXBytes($file->size), "</td>";
 

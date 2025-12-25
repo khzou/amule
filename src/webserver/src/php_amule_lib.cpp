@@ -841,6 +841,18 @@ void amule_download_file_prop_get(void *ptr, char *prop_name, PHP_VALUE_NODE *re
 		result->type = PHP_VAL_STRING;
 		wxString short_name(obj->sFileName.Length() > 60 ? (obj->sFileName.Left(60) + (wxT(" ..."))) : obj->sFileName);
 		result->str_val = strdup((const char *)unicode2UTF8(short_name));
+	} else if ( strcmp(prop_name, "filetype") == 0 ) {
+		result->type = PHP_VAL_STRING;
+		wxString ext = obj->sFileName.AfterLast(wxT('.'));
+		if (ext.IsEmpty()) {
+			result->str_val = strdup("");
+		} else {
+			ext = ext.Upper();
+			if (ext.Length() > 6) {
+				ext = ext.Left(6);
+			}
+			result->str_val = strdup((const char *)unicode2UTF8(ext));
+		}
 	} else if ( strcmp(prop_name, "hash") == 0 ) {
 		result->type = PHP_VAL_STRING;
 		result->str_val = strdup((const char *)unicode2UTF8(obj->sFileHash));
@@ -976,6 +988,18 @@ void amule_shared_file_prop_get(void *ptr, char *prop_name, PHP_VALUE_NODE *resu
 		result->type = PHP_VAL_STRING;
 		wxString short_name(obj->sFileName.Length() > 60 ? (obj->sFileName.Left(60) + (wxT(" ..."))) : obj->sFileName);
 		result->str_val = strdup((const char *)unicode2UTF8(short_name));
+	} else if ( strcmp(prop_name, "filetype") == 0 ) {
+		result->type = PHP_VAL_STRING;
+		wxString ext = obj->sFileName.AfterLast(wxT('.'));
+		if (ext.IsEmpty()) {
+			result->str_val = strdup("");
+		} else {
+			ext = ext.Upper();
+			if (ext.Length() > 6) {
+				ext = ext.Left(6);
+			}
+			result->str_val = strdup((const char *)unicode2UTF8(ext));
+		}
 	} else if ( strcmp(prop_name, "hash") == 0 ) {
 		result->type = PHP_VAL_STRING;
 		result->str_val = strdup((const char *)unicode2UTF8(obj->sFileHash));
@@ -1028,6 +1052,18 @@ void amule_search_file_prop_get(void *ptr, char *prop_name, PHP_VALUE_NODE *resu
 		result->type = PHP_VAL_STRING;
 		wxString short_name(obj->sFileName.Length() > 60 ? (obj->sFileName.Left(60) + (wxT(" ..."))) : obj->sFileName);
 		result->str_val = strdup((const char *)unicode2UTF8(short_name));
+	} else if ( strcmp(prop_name, "filetype") == 0 ) {
+		result->type = PHP_VAL_STRING;
+		wxString ext = obj->sFileName.AfterLast(wxT('.'));
+		if (ext.IsEmpty()) {
+			result->str_val = strdup("");
+		} else {
+			ext = ext.Upper();
+			if (ext.Length() > 6) {
+				ext = ext.Left(6);
+			}
+			result->str_val = strdup((const char *)unicode2UTF8(ext));
+		}
 	} else if ( strcmp(prop_name, "hash") == 0 ) {
 		result->type = PHP_VAL_STRING;
 		result->str_val = strdup((const char *)unicode2UTF8(obj->sHash));

@@ -216,7 +216,7 @@ function formCommandSubmit(command)
                 <tr> 
                   <th></th>
                   <th><a href="amuleweb-main-shared.php?sort=name">File Name</a></th>
-                  <th>File Type</th>
+                  <th><a href="amuleweb-main-shared.php?sort=filetype">File Type</a></th>
                   <th><a href="amuleweb-main-shared.php?sort=xfer">Transferred</a> 
                     (<a href="amuleweb-main-shared.php?sort=xfer_all">Total</a>)</th>
                   <th><a href="amuleweb-main-shared.php?sort=req">Requested</a> 
@@ -283,6 +283,7 @@ function formCommandSubmit(command)
 			switch ( $sort_order) {
 				case "size": $result = $a->size > $b->size; break;
 				case "name": $result = $a->name > $b->name; break;
+				case "filetype": $result = $a->filetype > $b->filetype; break;
 				case "xfer": $result = $a->xfer > $b->xfer; break;
 				case "xfer_all": $result = $a->xfer_all > $b->xfer_all; break;
 				case "acc": $result = $a->accept > $b->accept; break;
@@ -341,14 +342,8 @@ function formCommandSubmit(command)
 
 			echo "<td class='texte'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 
-			echo "<td class='texte' title='", $file->name, "'>", $file->name, "</td>";
-			$pos = strrpos($file->name, '.');
-			if ($pos == false) {
-				$ext = "";
-			} else {
-				$ext = strtoupper(substr($file->name, $pos + 1));
-			}
-			echo "<td class='texte' align='center'>", $ext, "</td>";
+			echo "<td class='texte'>", $file->short_name, "</td>";
+			echo "<td class='texte' align='center'>", $file->filetype, "</td>";
 			echo "<td class='texte' align='center'>", CastToXBytes($file->xfer), " (", CastToXBytes($file->xfer_all),")</td>";
 
 			echo "<td class='texte' align='center'>", $file->req, " (", $file->req_all, ")</td>";

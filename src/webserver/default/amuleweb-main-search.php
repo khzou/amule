@@ -194,7 +194,7 @@ function formCommandSubmit(command)
               <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
                   <th>&nbsp;</th>
                   <th><a href="amuleweb-main-search.php?sort=name">File Name</a></th>
-                  <th>File Type</th>
+                  <th><a href="amuleweb-main-search.php?sort=filetype">File Type</a></th>
                   <th><a href="amuleweb-main-search.php?sort=size">Size</a></th>
                   <th><a href="amuleweb-main-search.php?sort=sources">Sources</a></th>
     </tr><tr><td colspan="5" height="1" bgcolor="#000000"></td></tr>
@@ -225,6 +225,7 @@ function formCommandSubmit(command)
 			switch ( $sort_order) {
 				case "size": $result = $a->size > $b->size; break;
 				case "name": $result = $a->name > $b->name; break;
+				case "filetype": $result = $a->filetype > $b->filetype; break;
 				case "sources": $result = $a->sources > $b->sources; break;
 			}
 
@@ -312,14 +313,8 @@ function formCommandSubmit(command)
 
 			echo "<td class='texte'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 
-			echo "<td class='texte' title='", $file->name, "'>", $file->name, "</td>";
-			$pos = strrpos($file->name, '.');
-			if ($pos == false) {
-				$ext = "";
-			} else {
-				$ext = strtoupper(substr($file->name, $pos + 1));
-			}
-			echo "<td class='texte' align='center'>", $ext, "</td>";
+			echo "<td class='texte'>", $file->short_name, "</td>";
+			echo "<td class='texte' align='center'>", $file->filetype, "</td>";
 			
 			echo "<td class='texte' align='center'>", CastToXBytes($file->size), "</td>";
 
