@@ -178,9 +178,9 @@ function formCommandSubmit(command)
                   <td><input type="hidden" name="command"></td>
                   
             <td><a href="javascript:formCommandSubmit('reload');" onClick="MM_nbGroup('down','group1','reload','',1)" onMouseOver="MM_nbGroup('over','reload','','',1)" onMouseOut="MM_nbGroup('out')"><img src="images/refresh.png" alt="Ricarica Files Condivisi" name="reload" border="0" onload=""></a></td>
-				  <td><a href="javascript:formCommandSubmit('prioup');" onClick="MM_nbGroup('down','group1','up','',1)" onMouseOver="MM_nbGroup('over','up','','',1)" onMouseOut="MM_nbGroup('out')"><img name="up" src="images/up.png" border="0" alt="Alza Priorità" onLoad=""></a></td>
+				  <td><a href="javascript:formCommandSubmit('prioup');" onClick="MM_nbGroup('down','group1','up','',1)" onMouseOver="MM_nbGroup('over','up','','',1)" onMouseOut="MM_nbGroup('out')"><img name="up" src="images/up.png" border="0" alt="Alza Prioritï¿½" onLoad=""></a></td>
                   
-            <td><a href="javascript:formCommandSubmit('priodown');" onClick="MM_nbGroup('down','group1','down','',1)" onMouseOver="MM_nbGroup('over','down','','',1)" onMouseOut="MM_nbGroup('out')"><img src="images/down.png" alt="Abbassa Priorità" name="down" border="0" onload=""></a></td>
+            <td><a href="javascript:formCommandSubmit('priodown');" onClick="MM_nbGroup('down','group1','down','',1)" onMouseOver="MM_nbGroup('over','down','','',1)" onMouseOut="MM_nbGroup('out')"><img src="images/down.png" alt="Abbassa Prioritï¿½" name="down" border="0" onload=""></a></td>
                   <td><select name="select">
                       <option selected>Select prio</option>
                       <option>Low</option>
@@ -188,7 +188,7 @@ function formCommandSubmit(command)
                       <option>High</option>
                     </select> </td>
                   
-            <td><a href="javascript:formCommandSubmit('setprio');" onClick="MM_nbGroup('down','group1','resume','',1)" onMouseOver="MM_nbGroup('over','resume','','',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ok.png" alt="Imposta Priorità" name="resume" border="0" onload=""></a></td>
+            <td><a href="javascript:formCommandSubmit('setprio');" onClick="MM_nbGroup('down','group1','resume','',1)" onMouseOver="MM_nbGroup('over','resume','','',1)" onMouseOut="MM_nbGroup('out')"><img src="images/ok.png" alt="Imposta Prioritï¿½" name="resume" border="0" onload=""></a></td>
               
                   <td> 
                     <?php
@@ -216,6 +216,7 @@ function formCommandSubmit(command)
                 <tr> 
                   <th></th>
                   <th><a href="amuleweb-main-shared.php?sort=name">File Name</a></th>
+                  <th>File Type</th>
                   <th><a href="amuleweb-main-shared.php?sort=xfer">Transferred</a> 
                     (<a href="amuleweb-main-shared.php?sort=xfer_all">Total</a>)</th>
                   <th><a href="amuleweb-main-shared.php?sort=req">Requested</a> 
@@ -224,7 +225,7 @@ function formCommandSubmit(command)
                     (<a href="amuleweb-main-shared.php?sort=acc_all">Total</a>)</th>
                   <th><a href="amuleweb-main-shared.php?sort=size">Size</a></th>
                   <th><a href="amuleweb-main-shared.php?sort=prio">Priority</a></th>
-                </tr><tr><td colspan="9" height="1" bgcolor="#000000"></td></tr>
+                </tr><tr><td colspan="8" height="1" bgcolor="#000000"></td></tr>
                 <?php
 		function CastToXBytes($size)
 		{
@@ -340,7 +341,14 @@ function formCommandSubmit(command)
 
 			echo "<td class='texte'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 
-			echo "<td class='texte'>", $file->short_name, "</td>";
+			echo "<td class='texte' title='", $file->name, "'>", $file->name, "</td>";
+			$pos = strrpos($file->name, '.');
+			if ($pos == false) {
+				$ext = "";
+			} else {
+				$ext = strtoupper(substr($file->name, $pos + 1));
+			}
+			echo "<td class='texte' align='center'>", $ext, "</td>";
 			echo "<td class='texte' align='center'>", CastToXBytes($file->xfer), " (", CastToXBytes($file->xfer_all),")</td>";
 
 			echo "<td class='texte' align='center'>", $file->req, " (", $file->req_all, ")</td>";
@@ -350,7 +358,7 @@ function formCommandSubmit(command)
 
 			echo "<td class='texte' align='center'>", PrioString($file), "</td>";;
 
-			print "</tr><tr><td colspan='9' height='1' bgcolor='#c0c0c0'></td></tr>";
+			print "</tr><tr><td colspan='8' height='1' bgcolor='#c0c0c0'></td></tr>";
 		}
 	  ?>
               </table></td>

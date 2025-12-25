@@ -194,9 +194,10 @@ function formCommandSubmit(command)
               <table width="100%"  border="0" align="center" cellpadding="0" cellspacing="0">
                   <th>&nbsp;</th>
                   <th><a href="amuleweb-main-search.php?sort=name">File Name</a></th>
+                  <th>File Type</th>
                   <th><a href="amuleweb-main-search.php?sort=size">Size</a></th>
                   <th><a href="amuleweb-main-search.php?sort=sources">Sources</a></th>
-    </tr><tr><td colspan="9" height="1" bgcolor="#000000"></td></tr>
+    </tr><tr><td colspan="5" height="1" bgcolor="#000000"></td></tr>
     <?php
 		function CastToXBytes($size)
 		{
@@ -311,13 +312,20 @@ function formCommandSubmit(command)
 
 			echo "<td class='texte'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 
-			echo "<td class='texte'>", $file->short_name, "</td>";
+			echo "<td class='texte' title='", $file->name, "'>", $file->name, "</td>";
+			$pos = strrpos($file->name, '.');
+			if ($pos == false) {
+				$ext = "";
+			} else {
+				$ext = strtoupper(substr($file->name, $pos + 1));
+			}
+			echo "<td class='texte' align='center'>", $ext, "</td>";
 			
 			echo "<td class='texte' align='center'>", CastToXBytes($file->size), "</td>";
 
 			echo "<td class='texte' align='center'>", $file->sources, "</td>";
 
-			print "</tr></tr><tr><td colspan='9' height='1' bgcolor='#c0c0c0'></td></tr>";
+			print "</tr><tr><td colspan='5' height='1' bgcolor='#c0c0c0'></td></tr>";
 		}
 
 	  ?>

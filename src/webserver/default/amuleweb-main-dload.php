@@ -258,6 +258,7 @@ function formCommandSubmit(command)
           <tr> 
                   <th>&nbsp;</th>
                   <th><a href="amuleweb-main-dload.php?sort=name">File name</a></th>
+                  <th>File Type</th>
                   <th><a href="amuleweb-main-dload.php?sort=size">Size</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=size_done">Completed</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=speed">Download speed</a></th>
@@ -265,7 +266,7 @@ function formCommandSubmit(command)
                   <th><a href="amuleweb-main-dload.php?sort=srccount">Sources</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=status">Status</a></th>
                   <th><a href="amuleweb-main-dload.php?sort=prio">Priority</a></th>
-          </tr><tr><td colspan="9" height="1" bgcolor="#000000"></td></tr>
+          </tr><tr><td colspan="10" height="1" bgcolor="#000000"></td></tr>
           <?php
 		function CastToXBytes($size)
 		{
@@ -372,7 +373,7 @@ function formCommandSubmit(command)
 		$sort_reverse = $_SESSION["download_sort_reverse"];
 		if ( $sort_order != "" ) {
 			$_SESSION["download_sort"] = $sort_order;
-			usort(&$downloads, "my_cmp");
+			usort($downloads, "my_cmp");
 		}
 
 		//
@@ -394,7 +395,14 @@ function formCommandSubmit(command)
 	
 				echo "<td class='texte' height='22'>", '<input type="checkbox" name="', $file->hash, '" >', "</td>";
 	
-				echo "<td class='texte' height='22'>", $file->short_name, "</td>";
+				echo "<td class='texte' height='22' title='", $file->name, "'>", $file->name, "</td>";
+				$pos = strrpos($file->name, '.');
+				if ($pos == false) {
+					$ext = "";
+				} else {
+					$ext = strtoupper(substr($file->name, $pos + 1));
+				}
+				echo "<td class='texte' height='22' align='center'>", $ext, "</td>";
 				
 				echo "<td class='texte' height='22' align='center'>", CastToXBytes($file->size), "</td>";
 
@@ -419,7 +427,7 @@ function formCommandSubmit(command)
 				
 				echo "<td class='texte' height='22' align='center'>", PrioString($file), "</td>";
 				
-				print "</tr><tr><td colspan='9' height='1' bgcolor='#c0c0c0'></td></tr>";
+				print "</tr><tr><td colspan='10' height='1' bgcolor='#c0c0c0'></td></tr>";
 			}
 		}
 	  ?>
@@ -459,19 +467,6 @@ function formCommandSubmit(command)
                 <td>&nbsp;</td>
         </tr><tr><td colspan="9" height="1" bgcolor="#000000"></td></tr>
         <?php
-			function CastToXBytes($size)
-			{
-				if ( $size < 1024 ) {
-					$result = $size . " b";
-				} elseif ( $size < 1048576 ) {
-					$result = ($size / 1024.0) . " kb";
-				} elseif ( $size < 1073741824 ) {
-					$result = ($size / 1048576.0) . " mb";
-				} else {
-					$result = ($size / 1073741824.0) . " gb";
-				}
-				return $result;
-			}
 			$uploads = amule_load_vars("uploads");
 			foreach ($uploads as $file) {
 				echo "<tr>";
